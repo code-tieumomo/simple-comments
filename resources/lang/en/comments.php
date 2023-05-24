@@ -13,10 +13,10 @@ return [
     'update' => 'Update',
     'cancel' => 'Cancel',
     'reply_to_comment' => 'Reply to comment',
-    'markdown_cheatsheet' => '<a target="_blank" href=":url">Markdown</a> cheatsheet.',
+    'markdown_cheatsheet' => '<a target="_blank" href=":url" class="text-textPrimary">Markdown</a> cheatsheet.',
     'submit' => 'Submit',
     'your_message_is_required' => 'Your message is required.',
-    'enter_your_message_here' => 'Enter your message here:',
+    'enter_your_message_here' => 'Enter your message here..',
     'enter_your_email_here' => 'Enter your email here:',
     'enter_your_name_here' => 'Enter your name here:',
 ];
