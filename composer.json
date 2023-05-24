@@ -1,6 +1,7 @@
 {
     "name": "laravelista/comments",
     "description": "Comments for Laravel.",
+    "type": "library",
     "keywords": [
         "laravel",
         "comments"
@@ -14,7 +15,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "erusev/parsedown": "^1.7",
         "illuminate/database": "^9.0",
         "illuminate/http": "^9.0",
