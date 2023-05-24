@@ -39,7 +39,7 @@
             @endif
 
             <div class="form-group">
-                <label for="message">@lang('comments::comments.enter_your_message_here')</label>
+                <label for="message">@lang('comments::comments.enter_your_message_here') ???????????</label>
                 <textarea class="form-control @if($errors->has('message')) is-invalid @endif" name="message" rows="3"></textarea>
                 <div class="invalid-feedback">
                     @lang('comments::comments.your_message_is_required')
