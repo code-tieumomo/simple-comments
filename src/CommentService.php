@@ -113,4 +113,23 @@ class CommentService
 
         return $reply;
     }
+
+    public function like(Request $request, Comment $comment)
+    {
+        Gate::authorize('like-comment', $comment);
+
+        $user = Auth::user();
+        $liked = CommentLike::where('user_id', $user->id)->where('comment_id', $comment->id)->first();
+
+        if ($liked) {
+            $liked->delete();
+        } else {
+            $like = new CommentLike();
+            $like->user_id = $user->id;
+            $like->comment_id = $comment->id;
+            $like->save();
+        }
+
+        return $comment;
+    }
 }

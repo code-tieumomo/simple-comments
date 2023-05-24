@@ -25,4 +25,8 @@ interface CommentControllerInterface
      * Creates a reply "comment" to a comment.
      */
     public function reply(Request $request, Comment $comment);
+
+    public function like(Request $request, Comment $comment);
+
+    public function unlike(Request $request, Comment $comment);
 }

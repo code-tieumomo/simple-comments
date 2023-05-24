@@ -9,6 +9,8 @@ return [
      */
     'model' => \Laravelista\Comments\Comment::class,
 
+    'user_model' => 'App\Models\User',
+
     /**
      * You can customize the behaviour of these permissions by
      * creating your own and pointing to it here.
@@ -18,6 +20,7 @@ return [
         'delete-comment' => 'Laravelista\Comments\CommentPolicy@delete',
         'edit-comment' => 'Laravelista\Comments\CommentPolicy@update',
         'reply-to-comment' => 'Laravelista\Comments\CommentPolicy@reply',
+        'like-comment' => 'Laravelista\Comments\CommentPolicy@like',
     ],
 
     /**
@@ -44,7 +47,7 @@ return [
      *
      * To see only approved comments use this code in your view:
      *
-     *     @comments([
+     * @comments([
      *         'model' => $book,
      *         'approved' => true
      *     ])
@@ -60,7 +63,7 @@ return [
      */
     'guest_commenting' => false,
 
-	/**
+    /**
      * Set this option to `true` to enable soft deleting of comments.
      *
      * Comments will be soft deleted using laravels "softDeletes" trait.

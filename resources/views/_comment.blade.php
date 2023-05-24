@@ -13,6 +13,15 @@
         <div style="white-space: pre-wrap;" class="mb-1">{!! $markdown->line($comment->comment) !!}</div>
 
         <div class="flex gap-2">
+            @can('like-comment', $comment)
+                <a href="{{ route('comments.like', $comment->getKey()) }}"
+                   onclick="event.preventDefault();document.getElementById('comment-like-form-{{ $comment->getKey() }}').submit();"
+                   class="font-bold text-opacity-50 text-xs text-textPrimary focus:outline-0">@lang('comments::comments.like')</a>
+                <form id="comment-like-form-{{ $comment->getKey() }}" method="POST"
+                      action="{{ route('comments.like', $comment->getKey()) }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @endcan
             @can('reply-to-comment', $comment)
                 <button data-toggle="modal" data-target="#reply-modal-{{ $comment->getKey() }}"
                         class="font-bold text-opacity-50 text-xs text-textPrimary focus:outline-0">@lang('comments::comments.reply')</button>

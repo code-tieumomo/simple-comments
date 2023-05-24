@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Config;
 
 class Comment extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
 
     /**
      * The relations to eager load on every query.
@@ -81,5 +81,10 @@ class Comment extends Model
     public function parent()
     {
         return $this->belongsTo(Config::get('comments.model'), 'child_id');
+    }
+
+    public function commentLikes()
+    {
+        return $this->hasMany(CommentLike::class);
     }
 }

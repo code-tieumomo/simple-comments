@@ -8,6 +8,7 @@ return [
     'reply' => 'Reply',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'like' => 'Like',
     'edit_comment' => 'Edit comment',
     'update_your_message_here' => 'Update your message here:',
     'update' => 'Update',

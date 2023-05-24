@@ -12,7 +12,8 @@ class WebCommentController extends CommentController
 
     public function __construct(
         CommentService $commentService
-    ) {
+    )
+    {
         parent::__construct();
 
         $this->commentService = $commentService;
@@ -56,5 +57,17 @@ class WebCommentController extends CommentController
         $reply = $this->commentService->reply($request, $comment);
 
         return Redirect::to(URL::previous() . '#comment-' . $reply->getKey());
+    }
+
+    public function like(Request $request, Comment $comment)
+    {
+        $comment = $this->commentService->like($request, $comment);
+
+        return Redirect::to(URL::previous() . '#comment-' . $comment->getKey());
+    }
+
+    public function unlike(Request $request, Comment $comment)
+    {
+        // TODO: Implement unlike() method.
     }
 }
