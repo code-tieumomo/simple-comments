@@ -19,7 +19,8 @@ class Comment extends Model
      * @var array
      */
     protected $with = [
-        'commenter'
+        'commenter',
+        'commentLikes'
     ];
 
     /**
@@ -86,5 +87,17 @@ class Comment extends Model
     public function commentLikes()
     {
         return $this->hasMany(CommentLike::class);
+    }
+
+    public function isLikedByLoggedInUser()
+    {
+        if (auth()->check()) {
+            return $this->commentLikes->some(function ($commentLike) {
+                return $commentLike->user_id === auth()->user()->id;
+            });
+            // return $this->commentLikes->where('user_id', auth()->user()->id)->count() > 0;
+        }
+
+        return false;
     }
 }

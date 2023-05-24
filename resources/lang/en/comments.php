@@ -9,6 +9,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'like' => 'Like',
+    'liker' => 'People who liked this:',
     'edit_comment' => 'Edit comment',
     'update_your_message_here' => 'Update your message here:',
     'update' => 'Update',

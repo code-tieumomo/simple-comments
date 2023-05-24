@@ -9,14 +9,61 @@
          src="https://i.pravatar.cc/150?u={{ md5($comment->commenter->email ?? $comment->guest_email) }}"
          alt="{{ $comment->commenter->name ?? $comment->guest_name }} Avatar">
     <div class="flex flex-col text-sm grow">
-        <h5 class="text-sm mb-0">{{ $comment->commenter->name ?? $comment->guest_name }}</h5>
-        <div style="white-space: pre-wrap;" class="mb-1">{!! $markdown->line($comment->comment) !!}</div>
+        <div class="rounded-xl py-1 px-2 bg-slate-200 relative">
+            <h5 class="text-sm mb-0">{{ $comment->commenter->name ?? $comment->guest_name }}</h5>
+            <div style="white-space: pre-wrap; word-break: break-word;">{!! $markdown->line($comment->comment) !!}</div>
+            @if($comment->commentLikes->count() > 0)
+                <div class="absolute right-2 -bottom-2 py-0.5 px-1 bg-white rounded-full text-xs shadow-md flex items-center gap-1 cursor-pointer"
+                     data-toggle="modal" data-target="#commenter-modal-{{ $comment->getKey() }}">
+                    <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 21h1V8H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2zM20 8h-7l1.122-3.368A2 2 0 0 0 12.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 0 0-2-2z"></path>
+                    </svg>
+                    {{ $comment->commentLikes->count() }}
+                </div>
+                <div class="modal fade" id="commenter-modal-{{ $comment->getKey() }}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">@lang('comments::comments.liker')</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body flex flex-col gap-2">
+                                @foreach($comment->commentLikes as $like)
+                                    <div class="flex items-center gap-2">
+                                        <img src="https://i.pravatar.cc/150?u={{ $like->user->email }}"
+                                             class=" w-6 h-6 rounded-full"/>
+                                        {{ $like->user->name }}
+                                        @if($like->user->id == \Illuminate\Support\Facades\Auth::user()->id)
+                                            <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2 py-0.5 rounded">You</span>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-outline-secondary text-uppercase"
+                                        data-dismiss="modal">@lang('comments::comments.cancel')</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
 
-        <div class="flex gap-2">
+        <div class="flex gap-2 mt-1">
             @can('like-comment', $comment)
                 <a href="{{ route('comments.like', $comment->getKey()) }}"
                    onclick="event.preventDefault();document.getElementById('comment-like-form-{{ $comment->getKey() }}').submit();"
-                   class="font-bold text-opacity-50 text-xs text-textPrimary focus:outline-0">@lang('comments::comments.like')</a>
+                   class="font-bold text-opacity-50 text-xs text-textPrimary focus:outline-0">
+                    @if($comment->isLikedByLoggedInUser())
+                        <span class="text-primary underline">
+                            @lang('comments::comments.like')
+                        </span>
+                    @else
+                        @lang('comments::comments.like')
+                    @endif
+                </a>
                 <form id="comment-like-form-{{ $comment->getKey() }}" method="POST"
                       action="{{ route('comments.like', $comment->getKey()) }}" method="POST" style="display: none;">
                     @csrf

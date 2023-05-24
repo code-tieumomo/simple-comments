@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Config;
 
 class CommentLike extends \Illuminate\Database\Eloquent\Model
 {
+    protected $with = ['user'];
+
     protected $fillable = [
         'user_id',
         'comment_id'
